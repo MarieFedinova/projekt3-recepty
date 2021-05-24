@@ -112,3 +112,53 @@ const recepty = [
     img: 'https://images.unsplash.com/photo-1516684669134-de6f7c473a2a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=353c1f4206a931db97274e65329b85d8&auto=format&fit=crop&w=634&q=80'
   },
 ]
+
+let obrazek = document.querySelector('.recept-obrazek img');
+let nazev = document.querySelector('.recept-info h3');
+let receptyDiv = document.querySelector('.recepty');
+let pocetReceptu = recepty.length;
+console.log(pocetReceptu);
+zobrazRecepty()
+
+function zobrazRecepty() {
+  for (let i = 0; i < pocetReceptu; i = i + 1) {
+    let novyObrazek = document.createElement('img');
+    let novyNadpis = document.createElement('h3');
+    let recept = document.createElement('div');
+    recept.classList.add("recept");
+
+    novyObrazek.src = recepty[i].img;
+    novyNadpis.textContent = recepty[i].nadpis;
+
+    let receptObrazek = document.createElement('div');
+    receptObrazek.classList.add("recept-obrazek");
+    receptObrazek.appendChild(novyObrazek);
+    recept.appendChild(receptObrazek);
+
+    let receptInfo = document.createElement('div');
+    receptInfo.classList.add("recept-info");
+    receptInfo.appendChild(novyNadpis);
+    recept.appendChild(receptInfo);
+    receptyDiv.appendChild(recept);
+    recept.setAttribute("data-index", i);
+  }
+}
+
+let receptyVSeznamu = document.querySelectorAll(".recept");
+receptyVSeznamu.forEach((recept) => {
+  recept.addEventListener("click", function(recept) {
+    let receptT = recept.target;
+    let indexReceptu = parseInt(receptT.dataset.index);
+    console.log(indexReceptu);
+    let detailObrazek = document.querySelector('#recept-foto');
+    detailObrazek.src = recepty[indexReceptu].img;
+    let detailKategorie = document.querySelector('#recept-kategorie');
+    detailKategorie.textContent = recepty[indexReceptu].kategorie;
+    let detailHodnoceni = document.querySelector('#recept-hodnoceni');
+    detailHodnoceni.textContent = recepty[indexReceptu].hodnoceni;
+    let detailNazev = document.querySelector('#recept-nazev');
+    detailNazev.textContent = recepty[indexReceptu].nadpis;
+    let detailPopis = document.querySelector('#recept-popis');
+    detailPopis.textContent = recepty[indexReceptu].popis;
+  });
+});
