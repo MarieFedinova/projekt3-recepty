@@ -140,25 +140,37 @@ function zobrazRecepty() {
     receptInfo.appendChild(novyNadpis);
     recept.appendChild(receptInfo);
     receptyDiv.appendChild(recept);
-    recept.setAttribute("data-index", i);
-  }
+
+    recept.addEventListener("click", function() {
+      let detailObrazek = document.querySelector('#recept-foto');
+      detailObrazek.src = recepty[i].img;
+      let detailKategorie = document.querySelector('#recept-kategorie');
+      detailKategorie.textContent = recepty[i].kategorie;
+      let detailHodnoceni = document.querySelector('#recept-hodnoceni');
+      detailHodnoceni.textContent = recepty[i].hodnoceni;
+      let detailNazev = document.querySelector('#recept-nazev');
+      detailNazev.textContent = recepty[i].nadpis;
+      let detailPopis = document.querySelector('#recept-popis');
+      detailPopis.textContent = recepty[i].popis;
+  })
+}
 }
 
-let receptyVSeznamu = document.querySelectorAll(".recept");
-receptyVSeznamu.forEach((recept) => {
-  recept.addEventListener("click", function(recept) {
-    let receptT = recept.target;
-    let indexReceptu = parseInt(receptT.dataset.index);
-    console.log(indexReceptu);
-    let detailObrazek = document.querySelector('#recept-foto');
-    detailObrazek.src = recepty[indexReceptu].img;
-    let detailKategorie = document.querySelector('#recept-kategorie');
-    detailKategorie.textContent = recepty[indexReceptu].kategorie;
-    let detailHodnoceni = document.querySelector('#recept-hodnoceni');
-    detailHodnoceni.textContent = recepty[indexReceptu].hodnoceni;
-    let detailNazev = document.querySelector('#recept-nazev');
-    detailNazev.textContent = recepty[indexReceptu].nadpis;
-    let detailPopis = document.querySelector('#recept-popis');
-    detailPopis.textContent = recepty[indexReceptu].popis;
-  });
+recepty.sort(function (a, b) {
+  return a.hodnoceni - b.hodnoceni;
 });
+
+console.log(recepty);
+
+zobrazHodnoceni()
+function zobrazHodnoceni() {
+  for (let i = 0; i < pocetReceptu; i = i + 1) { 
+    console.log(recepty[i].hodnoceni);
+  }
+}
+// let kategorie = document.querySelector('#kategorie');
+// kategorie.addEventListener("change", function() {
+//   if (value === 's') {
+
+//   }
+// })
