@@ -117,10 +117,10 @@ let obrazek = document.querySelector('.recept-obrazek img');
 let nazev = document.querySelector('.recept-info h3');
 let receptyDiv = document.querySelector('.recepty');
 let pocetReceptu = recepty.length;
-console.log(pocetReceptu);
 zobrazRecepty()
 
 function zobrazRecepty() {
+  let receptyDiv = document.querySelector('.recepty');
   for (let i = 0; i < pocetReceptu; i = i + 1) {
     let novyObrazek = document.createElement('img');
     let novyNadpis = document.createElement('h3');
@@ -156,21 +156,69 @@ function zobrazRecepty() {
 }
 }
 
-recepty.sort(function (a, b) {
-  return a.hodnoceni - b.hodnoceni;
-});
+function porovnej() {
+  console.log('sort');
+}
+
+
+function vymazRecepty() {
+  let rec = document.querySelectorAll('.recept');
+  rec.forEach(element => receptyDiv.removeChild(element));
+}
+
+
+
+
 
 console.log(recepty);
 
-zobrazHodnoceni()
-function zobrazHodnoceni() {
-  for (let i = 0; i < pocetReceptu; i = i + 1) { 
-    console.log(recepty[i].hodnoceni);
+
+
+// zmenRecepty()
+// zobrazHodnoceni()
+// function zobrazHodnoceni() {
+//   for (let i = 0; i < pocetReceptu; i = i + 1) { 
+//     console.log(recepty[i].hodnoceni);
+//   }
+// }
+
+let kategorie = document.querySelector('#kategorie');
+
+function filtruj() {
+  if(kategorie.value === 's') {
+    console.log('s');
+  } else if(kategorie.value === 'h') {
+    console.log('h');
+  } else if(kategorie.value === 'd') {
+    console.log('d');
+  } else {
+    console.log('no filter');
   }
 }
-// let kategorie = document.querySelector('#kategorie');
-// kategorie.addEventListener("change", function() {
-//   if (value === 's') {
 
-//   }
-// })
+let razeni = document.querySelector('#razeni');
+
+function sortuj() {
+  if(razeni.value === '1') {
+    recepty.sort(function (a, b) {
+      return b.hodnoceni - a.hodnoceni;
+    });
+    vymazRecepty();
+    zobrazRecepty();
+  } else if(razeni.value === '2') {
+    recepty.sort(function (a, b) {
+      return a.hodnoceni - b.hodnoceni;
+    });
+    vymazRecepty();
+    zobrazRecepty();
+  } else {
+    //TODO: nevím jak seřazené pole recepty vrátit do původního pořadí
+    location.reload();
+  }
+}
+
+// let option = document.querySelector('#kategorie option');
+// kategorie.addEventListener("change", function() {
+//   let value = option.getAttribute('value');
+//   console.log(value);
+
