@@ -116,12 +116,11 @@ const recepty = [
 let obrazek = document.querySelector('.recept-obrazek img');
 let nazev = document.querySelector('.recept-info h3');
 let receptyDiv = document.querySelector('.recepty');
-let pocetReceptu = recepty.length;
-zobrazRecepty()
+zobrazRecepty(recepty);
 
-function zobrazRecepty() {
+function zobrazRecepty(recepty) {
   let receptyDiv = document.querySelector('.recepty');
-  for (let i = 0; i < pocetReceptu; i = i + 1) {
+  for (let i = 0; i < recepty.length; i = i + 1) {
     let novyObrazek = document.createElement('img');
     let novyNadpis = document.createElement('h3');
     let recept = document.createElement('div');
@@ -156,19 +155,10 @@ function zobrazRecepty() {
 }
 }
 
-function porovnej() {
-  console.log('sort');
-}
-
-
 function vymazRecepty() {
   let rec = document.querySelectorAll('.recept');
   rec.forEach(element => receptyDiv.removeChild(element));
 }
-
-
-
-
 
 console.log(recepty);
 
@@ -186,13 +176,20 @@ let kategorie = document.querySelector('#kategorie');
 
 function filtruj() {
   if(kategorie.value === 's') {
-    console.log('s');
+    let snidane = recepty.filter(rec => rec.kategorie === 'Snídaně');
+    vymazRecepty();
+    zobrazRecepty(snidane);
   } else if(kategorie.value === 'h') {
-    console.log('h');
+    let hlavniJidlo = recepty.filter(rec => rec.kategorie === 'Hlavní jidlo');
+    vymazRecepty();
+    zobrazRecepty(hlavniJidlo);
   } else if(kategorie.value === 'd') {
-    console.log('d');
+    let dezert = recepty.filter(rec => rec.kategorie === 'Dezert');
+    vymazRecepty();
+    zobrazRecepty(dezert);
   } else {
-    console.log('no filter');
+    vymazRecepty();
+    zobrazRecepty(recepty);
   }
 }
 
@@ -200,19 +197,19 @@ let razeni = document.querySelector('#razeni');
 
 function sortuj() {
   if(razeni.value === '1') {
-    recepty.sort(function (a, b) {
+    let nejlepsi = recepty.sort(function (a, b) {
       return b.hodnoceni - a.hodnoceni;
     });
     vymazRecepty();
-    zobrazRecepty();
+    zobrazRecepty(nejlepsi);
   } else if(razeni.value === '2') {
-    recepty.sort(function (a, b) {
+    let nejhorsi = recepty.sort(function (a, b) {
       return a.hodnoceni - b.hodnoceni;
     });
     vymazRecepty();
-    zobrazRecepty();
+    zobrazRecepty(nejhorsi);
   } else {
-    //TODO: nevím jak seřazené pole recepty vrátit do původního pořadí
+    //TODO: nevím, jak seřazené recepty znovu dostat do původního pořadí
     location.reload();
   }
 }
