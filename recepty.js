@@ -116,7 +116,29 @@ const recepty = [
 let obrazek = document.querySelector('.recept-obrazek img');
 let nazev = document.querySelector('.recept-info h3');
 let receptyDiv = document.querySelector('.recepty');
+let detailObrazek = document.querySelector('#recept-foto');
+let detailKategorie = document.querySelector('#recept-kategorie');
+let detailHodnoceni = document.querySelector('#recept-hodnoceni');
+let detailNazev = document.querySelector('#recept-nazev');
+let detailPopis = document.querySelector('#recept-popis');
+
 zobrazRecepty(recepty);
+zobrazStorage();
+
+function zobrazStorage() {
+  let obr = localStorage.obrazek;
+  let kat = localStorage.kategorie;
+  let hod = localStorage.hodnoceni;
+  let nad = localStorage.nadpis;
+  let pop = localStorage.popis;
+  if(obr !== undefined) {
+    detailObrazek.src = obr;
+    detailKategorie.textContent = kat;
+    detailHodnoceni.textContent = hod;
+    detailNazev.textContent = nad;
+    detailPopis.textContent = pop;
+  }
+}
 
 function zobrazRecepty(recepty) {
   let receptyDiv = document.querySelector('.recepty');
@@ -141,16 +163,20 @@ function zobrazRecepty(recepty) {
     receptyDiv.appendChild(recept);
 
     recept.addEventListener("click", function() {
-      let detailObrazek = document.querySelector('#recept-foto');
       detailObrazek.src = recepty[i].img;
-      let detailKategorie = document.querySelector('#recept-kategorie');
+      localStorage.setItem('obrazek', recepty[i].img);
+      
       detailKategorie.textContent = recepty[i].kategorie;
-      let detailHodnoceni = document.querySelector('#recept-hodnoceni');
+      localStorage.setItem('kategorie', recepty[i].kategorie);
+      
       detailHodnoceni.textContent = recepty[i].hodnoceni;
-      let detailNazev = document.querySelector('#recept-nazev');
+      localStorage.setItem('hodnoceni', recepty[i].hodnoceni);
+      
       detailNazev.textContent = recepty[i].nadpis;
-      let detailPopis = document.querySelector('#recept-popis');
+      localStorage.setItem('nadpis', recepty[i].nadpis);
+      
       detailPopis.textContent = recepty[i].popis;
+      localStorage.setItem('popis', recepty[i].popis);
   })
 }
 }
@@ -159,18 +185,6 @@ function vymazRecepty() {
   let rec = document.querySelectorAll('.recept');
   rec.forEach(element => receptyDiv.removeChild(element));
 }
-
-console.log(recepty);
-
-
-
-// zmenRecepty()
-// zobrazHodnoceni()
-// function zobrazHodnoceni() {
-//   for (let i = 0; i < pocetReceptu; i = i + 1) { 
-//     console.log(recepty[i].hodnoceni);
-//   }
-// }
 
 let kategorie = document.querySelector('#kategorie');
 
@@ -209,13 +223,9 @@ function sortuj() {
     vymazRecepty();
     zobrazRecepty(nejhorsi);
   } else {
-    //TODO: nevím, jak seřazené recepty znovu dostat do původního pořadí
+    //TODO: nevím, jak jinak seřazené recepty znovu dostat do původního pořadí
     location.reload();
   }
 }
-
-// let option = document.querySelector('#kategorie option');
-// kategorie.addEventListener("change", function() {
-//   let value = option.getAttribute('value');
-//   console.log(value);
+ //TODO: přidat filtrování dle textu, propojit všechny tři filtry
 
